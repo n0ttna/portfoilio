@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WOW Портфолио — полный лендинг</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+:root{
+  --glass: rgba(255,255,255,0.06);
+  --glass-2: rgba(255,255,255,0.04);
+}
+html { scroll-behavior: smooth; }
+body{
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(120deg, #ffffff, #e5e7eb);
+  color: #1f2937;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* moving gradient layers */
+.bg-wave {
+  position: absolute; inset:0; z-index:-2; pointer-events:none; opacity:0.1; mix-blend-mode:screen;
+  background: radial-gradient(600px 400px at 10% 20%, rgba(14,165,233,0.1), transparent 12%),
+              radial-gradient(500px 500px at 90% 80%, rgba(59,130,246,0.08), transparent 15%);
+  animation: floatBG 18s ease-in-out infinite;
+}
+@keyframes floatBG{ 0%{transform:translateY(0px)} 50%{transform:translateY(-20px)} 100%{transform:translateY(0px)} }
+
+/* neon heading */
+.neon {
+  background: linear-gradient(90deg,#0ea5e9,#3b82f6);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  position:relative;
+}
+.neon::after{
+  content:''; position:absolute; inset:0; background:linear-gradient(90deg,#0ea5e9,#3b82f6); filter:blur(12px); opacity:0.25;
+  z-index:-1; transform:translateY(4px);
+}
+
+/* shine */
+.shine{
+  position:relative; overflow:hidden;
+}
+.shine::before{
+  content:''; position:absolute; left:-120%; top:0; width:40%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+  transform:skewX(-20deg); animation:shine 3.8s linear infinite; opacity:0.9;
+}
+@keyframes shine{ 0%{left:-120%} 100%{left:120%} }
+
+/* card decorative shapes */
+.card-decor{ position:absolute; width:110px; height:110px; border-radius:24px; opacity:0.05; filter:blur(12px);} 
+
+/* hover button */
+.btn-ghost:hover{ transform:translateY(-2px) scale(1.02); transition:0.3s; }
+
+/* responsive tweaks */
+@media (max-width:768px){ .desktop-hidden{ display:none } }
+
+/* testimonials */
+.testimonial-track{ display:flex; gap:24px; transition:transform 0.6s cubic-bezier(.2,.9,.3,1); }
+
+/* expandable content */
+.expandable-content{ display:none; margin-top:0.5rem; font-size:0.875rem; color:#4b5563; }
+</style>
+</head>
+<body class="relative">
+
+<div class="bg-wave"></div>
+
+<!-- NAV -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-md shadow-md">
+  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-teal-400 rounded-full flex items-center justify-center shadow-lg">
+        <span class="font-extrabold text-white">W</span>
+      </div>
+      <div class="hidden sm:block">
+        <div class="text-sm text-gray-700">WOW Портфолио</div>
+        <div class="text-xs text-gray-500">Информационные системы · Программирование</div>
+      </div>
+    </div>
+    <nav class="hidden md:flex gap-6 items-center text-sm text-gray-700">
+      <a href="#about" class="hover:text-blue-500 transition">Обо мне</a>
+      <a href="#skills" class="hover:text-blue-500 transition">Навыки</a>
+      <a href="#works" class="hover:text-blue-500 transition">Вот что я умею</a>
+      <a href="#contact" class="hover:text-blue-500 transition">Контакты</a>
+      <a href="#contact" class="ml-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-400 to-teal-400 text-white font-semibold shadow-lg">Связаться</a>
+    </nav>
+    <div class="md:hidden text-gray-700 cursor-pointer" id="burger">☰</div>
+  </div>
+  <div class="md:hidden bg-white/90 backdrop-blur-md hidden flex-col gap-4 px-6 py-4" id="mobileMenu">
+    <a href="#about" class="hover:text-blue-500 transition">Обо мне</a>
+    <a href="#skills" class="hover:text-blue-500 transition">Навыки</a>
+    <a href="#works" class="hover:text-blue-500 transition">Вот что я умею</a>
+    <a href="#contact" class="hover:text-blue-500 transition">Контакты</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="min-h-screen flex items-center justify-center text-center relative px-6 pt-28 pb-10">
+  <div class="max-w-5xl mx-auto relative">
+    <div class="relative p-8 rounded-3xl" style="background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border:1px solid rgba(0,0,0,0.05);">
+      <div class="card-decor" style="right:-40px; top:-40px; background:linear-gradient(120deg,#0ea5e9,#3b82f6);"></div>
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight neon shine">Привет! Я — <span id="typewriter"></span></h1>
+      <p class="mt-6 text-gray-600 max-w-3xl mx-auto">Разрабатываю адаптивные сайты, веб-приложения и интерфейсы — от идеи до рабочего продукта. Люблю детали, анимации и аккуратный код.</p>
+
+      <div class="mt-8 flex flex-wrap gap-4 justify-center">
+        <a href="#works" class="px-6 py-3 rounded-full bg-gradient-to-r from-blue-400 to-teal-400 font-semibold shadow-lg hover:scale-105 transition">Вот что я умею</a>
+        <a href="#contact" class="px-6 py-3 rounded-full border border-gray-300 text-gray-700 btn-ghost transition">Написать мне</a>
+      </div>
+
+      <div class="mt-8 flex gap-6 justify-center items-center text-sm text-gray-500">
+        <div>📍 Россия</div>
+        <div>🎓 Инф. системы и пр.</div>
+        <div>💼 Ищу стажировку</div>
+      </div>
+    </div>
+
+    <!-- scroll hint -->
+    <div class="mt-8 flex justify-center">
+      <div class="animate-bounce text-gray-400">↓ Прокрути вниз ↓</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 px-6">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-4xl font-extrabold mb-4">Обо мне — кратко и по сути</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">Я прошёл обучение и получил фундаментальные знания в области информационных систем и программирования. Опыт от структурирования данных до создания интерфейсов, которые люди любят использовать.</p>
+      <p class="text-gray-700 leading-relaxed mb-4">Люблю доводить вещи до идеала: оптимизировать, рефакторить, тестировать. Внимание не только к внешнему виду, но и к внутренней архитектуре, безопасности и производительности.</p>
+      <p class="text-gray-500 italic">Немного личного: крепкий кофе, длинные плейлисты и ночные сессии кодинга, когда всё работает идеально — настоящее удовольствие от профессии.</p>
+    </div>
+    <div class="space-y-6">
+      <div class="p-6 rounded-2xl bg-white/5 backdrop-blur-sm">
+        <h4 class="font-bold">Образование</h4>
+        <p class="text-sm text-gray-700 mt-2">Диплом по специальности "Информационные системы и программирование" — базы данных, разработка ПО, сети.</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-white/5 backdrop-blur-sm">
+        <h4 class="font-bold">Подход к работе</h4>
+        <p class="text-sm text-gray-700 mt-2">Чёткое планирование, быстрая прототипизация, юзер-ориентированный дизайн и внимание к деталям.</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-white/5 backdrop-blur-sm">
+        <h4 class="font-bold">Инструменты</h4>
+        <p class="text-sm text-gray-700 mt-2">HTML, CSS, JavaScript, Tailwind CSS, Node.js/Express, SQL, Git.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="py-16 px-6 bg-gray-50">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-3xl font-extrabold mb-8">Навыки</h3>
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <div class="space-y-6">
+        <div>
+          <div class="flex justify-between mb-2"><span>HTML & CSS</span><span class="text-sm text-gray-500">90%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div data-width="90" class="skill-bar h-3 rounded-full bg-gradient-to-r from-blue-400 to-teal-400" style="width:0%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-2"><span>JavaScript</span><span class="text-sm text-gray-500">85%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div data-width="85" class="skill-bar h-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" style="width:0%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-2"><span>React / Frontend</span><span class="text-sm text-gray-500">70%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div data-width="70" class="skill-bar h-3 rounded-full bg-gradient-to-r from-indigo-400 to-purple-400" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div>
+          <div class="flex justify-between mb-2"><span>Backend (базовый)</span><span class="text-sm text-gray-500">50%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div data-width="50" class="skill-bar h-3 rounded-full bg-gradient-to-r from-green-400 to-blue-400" style="width:0%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-2"><span>Базы данных</span><span class="text-sm text-gray-500">60%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div data-width="60" class="skill-bar h-3 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400" style="width:0%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-2"><span>Дизайн & Prototyping</span><span class="text-sm text-gray-500">65%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div data-width="65" class="skill-bar h-3 rounded-full bg-gradient-to-r from-pink-400 to-red-400" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- "Вот что я умею" -->
+<section id="works" class="py-20 px-6 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-3xl font-extrabold mb-8">Вот что я умею</h3>
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <!-- Skill 1 -->
+      <div class="p-6 rounded-2xl bg-gray-50 shadow-md cursor-pointer skill-card">
+        <h4 class="font-bold text-lg">Адаптивная верстка</h4>
+        <p class="mt-2 text-gray-600">Создаю сайты, которые одинаково хорошо смотрятся на мобильных, планшетах и десктопах.</p>
+        <div class="mt-2 expandable-content">
+          <ul class="list-disc pl-5 text-gray-500">
+            <li>Flexbox, Grid</li>
+            <li>Анимации и переходы</li>
+            <li>Оптимизация под SEO и скорость</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skill 2 -->
+      <div class="p-6 rounded-2xl bg-gray-50 shadow-md cursor-pointer skill-card">
+        <h4 class="font-bold text-lg">JavaScript и интерактивность</h4>
+        <p class="mt-2 text-gray-600">Добавляю динамику, валидацию форм и интерактивные элементы на сайте.</p>
+        <div class="mt-2 expandable-content">
+          <ul class="list-disc pl-5 text-gray-500">
+            <li>Vanilla JS и DOM</li>
+            <li>Fetch API / AJAX</li>
+            <li>Event handling и модальные окна</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skill 3 -->
+      <div class="p-6 rounded-2xl bg-gray-50 shadow-md cursor-pointer skill-card">
+        <h4 class="font-bold text-lg">React / Frontend</h4>
+        <p class="mt-2 text-gray-600">Создаю SPA приложения с современным стейтом и компонентами.</p>
+        <div class="mt-2 expandable-content">
+          <ul class="list-disc pl-5 text-gray-500">
+            <li>React Hooks</li>
+            <li>Component Architecture</li>
+            <li>TailwindCSS / Styling</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skill 4 -->
+      <div class="p-6 rounded-2xl bg-gray-50 shadow-md cursor-pointer skill-card">
+        <h4 class="font-bold text-lg">Backend / Базы данных</h4>
+        <p class="mt-2 text-gray-600">Основы работы с Node.js, Express, SQL и хранение данных.</p>
+        <div class="mt-2 expandable-content">
+          <ul class="list-disc pl-5 text-gray-500">
+            <li>Node.js / Express</li>
+            <li>PostgreSQL / MySQL</li>
+            <li>REST API создание</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skill 5 -->
+      <div class="p-6 rounded-2xl bg-gray-50 shadow-md cursor-pointer skill-card">
+        <h4 class="font-bold text-lg">Дизайн и прототипирование</h4>
+        <p class="mt-2 text-gray-600">Создаю макеты и прототипы, которые удобно использовать пользователю.</p>
+        <div class="mt-2 expandable-content">
+          <ul class="list-disc pl-5 text-gray-500">
+            <li>Figma / Adobe XD</li>
+            <li>UX/UI основы</li>
+            <li>Интерактивные прототипы</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skill 6 -->
+      <div class="p-6 rounded-2xl bg-gray-50 shadow-md cursor-pointer skill-card">
+        <h4 class="font-bold text-lg">Оптимизация и качество кода</h4>
+        <p class="mt-2 text-gray-600">Слежу за чистотой, тестированием и производительностью проектов.</p>
+        <div class="mt-2 expandable-content">
+          <ul class="list-disc pl-5 text-gray-500">
+            <li>Рефакторинг</li>
+            <li>Unit тесты</li>
+            <li>Производительность и безопасность</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-16 px-6 bg-gray-50">
+  <div class="max-w-5xl mx-auto">
+    <h3 class="text-3xl font-extrabold mb-8">Отзывы</h3>
+    <div class="overflow-hidden">
+      <div id="test-track" class="testimonial-track">
+        <div class="p-6 rounded-2xl bg-white min-w-[320px] shadow"> 
+          <p class="text-gray-700">«Отличная работа: быстрый отклик, аккуратный интерфейс и понятный код»</p>
+          <div class="mt-4 text-sm text-gray-500">— Алексей, стартап</div>
+        </div>
+        <div class="p-6 rounded-2xl bg-white min-w-[320px] shadow"> 
+          <p class="text-gray-700">«Ребята сделали всё вовремя и даже лучше, чем ожидали»</p>
+          <div class="mt-4 text-sm text-gray-500">— Марина, маркетинг</div>
+        </div>
+        <div class="p-6 rounded-2xl bg-white min-w-[320px] shadow"> 
+          <p class="text-gray-700">«Чистый код и внимание к деталям — рекомендую»</p>
+          <div class="mt-4 text-sm text-gray-500">— Илья, CEO</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 flex gap-4 justify-center">
+      <button id="prevT" class="px-4 py-2 rounded bg-gray-200">◀</button>
+      <button id="nextT" class="px-4 py-2 rounded bg-gray-200">▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<!-- CONTACT -->
+<section id="contact" class="py-16 px-6 bg-white">
+  <div class="max-w-4xl mx-auto text-center">
+    <h3 class="text-3xl font-extrabold mb-4">Напишите мне</h3>
+    <p class="text-gray-700 mb-8">Хотите обсудить проект, стажировку или просто поболтать о технологиях?  
+    Напишите мне — и я обязательно отвечу с планом и предложениями.</p>
+    
+    <form class="max-w-2xl mx-auto grid grid-cols-1 gap-4" onsubmit="sendMail(event)">
+      <input type="text" id="contactName" placeholder="Ваше имя" class="p-3 rounded-lg bg-gray-100 border border-gray-300" required />
+      <input type="email" id="contactEmail" placeholder="Ваш Email" class="p-3 rounded-lg bg-gray-100 border border-gray-300" required />
+      <textarea id="contactMessage" placeholder="Ваше сообщение" class="p-3 rounded-lg bg-gray-100 border border-gray-300" rows="5" required></textarea>
+      <button type="submit" class="p-3 rounded-lg bg-gradient-to-r from-blue-400 to-teal-400 text-white font-semibold hover:scale-105 transition">Отправить</button>
+    </form>
+
+    <p class="mt-6 text-gray-500 text-sm">Или напишите напрямую на: <a href="mailto:abudkov2005@mail.ru" class="text-blue-500 underline">abudkov2005@mail.ru</a></p>
+  </div>
+</section>
+
+<script>
+function sendMail(event){
+  event.preventDefault();
+  const name = document.getElementById('contactName').value;
+  const email = document.getElementById('contactEmail').value;
+  const message = document.getElementById('contactMessage').value;
+
+  const mailtoLink = `mailto:abudkov2005@mail.ru?subject=${encodeURIComponent('Сообщение с портфолио от '+name)}&body=${encodeURIComponent(message+'\n\nОт: '+name+' ('+email+')')}`;
+  window.location.href = mailtoLink;
+}
+</script>
+
+
+<!-- FOOTER -->
+<footer class="py-8 text-center text-sm text-gray-500 bg-gray-50">
+  <div>© 2025 — Сделано студентом. Все права условно защищены.</div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+// MOBILE MENU
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', ()=>{ mobileMenu.classList.toggle('hidden'); });
+
+// TYPEWRITER
+(function(){
+  const el = document.getElementById('typewriter');
+  const roles = ["Front-end разработчик","Full-stack младший","UI/UX энтузиаст","Инженер по информационным системам"];
+  let idx=0,pos=0,forward=true;
+  function tick(){
+    const word = roles[idx];
+    if(forward){ pos++; if(pos===word.length){ forward=false; setTimeout(tick,900); return; }}
+    else { pos--; if(pos===0){ forward=true; idx=(idx+1)%roles.length; }}
+    el.textContent = word.slice(0,pos);
+    setTimeout(tick, forward?70:30);
+  }
+  setTimeout(()=>{ tick(); }, 500);
+})();
+
+// SKILL BARS
+(function(){
+  const bars = document.querySelectorAll('.skill-bar');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        bars.forEach(b=>{ const w=b.dataset.width||70; b.style.transition='width 1200ms ease'; b.style.width=w+'%'; });
+        io.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  if(bars.length) io.observe(document.querySelector('#skills'));
+})();
+
+// TESTIMONIALS
+(function(){
+  const track = document.getElementById('test-track');
+  const next = document.getElementById('nextT');
+  const prev = document.getElementById('prevT');
+  let index=0;
+  function update(){ track.style.transform=`translateX(${-index*(track.children[0].offsetWidth+24)}px)`;}
+  next.addEventListener('click',()=>{ index=Math.min(index+1,track.children.length-1); update(); });
+  prev.addEventListener('click',()=>{ index=Math.max(index-1,0); update(); });
+  setInterval(()=>{ index=(index+1)%track.children.length; update(); },5500);
+  window.addEventListener('resize',update);
+})();
+
+// EXPANDABLE "WHAT I CAN DO"
+document.querySelectorAll('.skill-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const content = card.querySelector('.expandable-content');
+    content.style.display = content.style.display==='block'?'none':'block';
+  });
+});
+
+// SCROLLREVEAL
+ScrollReveal().reveal('section h3, section h2, .card-decor, .testimonial-track > div, .skill-card', { distance:'30px', origin:'bottom', interval:120, duration:800 });
+
+// SMOOTH SCROLL FOR LINKS
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    target.scrollIntoView({behavior:'smooth'});
+    if(!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+  });
+});
+</script>
+
+</body>
+</html>
